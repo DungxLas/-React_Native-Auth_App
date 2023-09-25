@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -6,7 +6,16 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import AuthForm from "./AuthForm";
 import { Colors } from "../../constants/styles";
 import FlatButton from "../ui/FlatButton";
-function AuthContent({ isLogin, onAuthenticate }) {
+
+type AuthContentProps = {
+  isLogin?: any;
+  onAuthenticate: (email: any, password: any) => void;
+};
+
+const AuthContent: React.FC<AuthContentProps> = ({
+  isLogin,
+  onAuthenticate,
+}) => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
   const [credentialsInvalid, setCredentialsInvalid] = useState({
@@ -24,7 +33,12 @@ function AuthContent({ isLogin, onAuthenticate }) {
     }
   }
 
-  function submitHandler(credentials) {
+  function submitHandler(credentials: {
+    email: any;
+    confirmEmail: any;
+    password: any;
+    confirmPassword: any;
+  }) {
     let { email, confirmEmail, password, confirmPassword } = credentials;
 
     email = email.trim();
@@ -49,7 +63,7 @@ function AuthContent({ isLogin, onAuthenticate }) {
       });
       return;
     }
-    onAuthenticate({ email, password });
+    onAuthenticate(email, password);
   }
 
   return (
@@ -66,7 +80,7 @@ function AuthContent({ isLogin, onAuthenticate }) {
       </View>
     </View>
   );
-}
+};
 
 export default AuthContent;
 
