@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 import Button from "../ui/Button";
 import Input from "./Input";
 
-function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
+function AuthForm(this: any, { isLogin, onSubmit, credentialsInvalid }: any) {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredConfirmEmail, setEnteredConfirmEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
@@ -17,7 +17,10 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
     confirmPassword: passwordsDontMatch,
   } = credentialsInvalid;
 
-  function updateInputValueHandler(inputType, enteredValue) {
+  function updateInputValueHandler(
+    inputType: any,
+    enteredValue: SetStateAction<string>
+  ) {
     switch (inputType) {
       case "email":
         setEnteredEmail(enteredValue);
